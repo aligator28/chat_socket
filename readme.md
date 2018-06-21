@@ -17,6 +17,8 @@
 
 5. Стартуем сервер laravel-echo-server start
 Если все ок, увидим:
+
+```javascript
 L A R A V E L  E C H O  S E R V E R
 
 version 1.3.6
@@ -29,6 +31,7 @@ version 1.3.6
 ✔  Listening for redis events...
 
 Server ready!
+```
 
 И пускай висит
 
