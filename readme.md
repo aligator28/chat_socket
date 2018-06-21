@@ -310,7 +310,8 @@ if (typeof io !== 'undefined') {
 
 1. php artisan make:event MessagePushed (ну или любое другое название для класса)
 2. php artisan make:controller MessageController
-3. смотри код этих файлов
+3. php artisan make:model Message -m (модель с миграцией см. мою миграцию, также можно создать связи между Message и User см. соответсвующие модели)
+4. смотри код этих файлов
 ```php
 <?php
 
@@ -404,14 +405,14 @@ class MessageController extends Controller
 
 ```
 
-4. файл routes/channel.php
+5. файл routes/channel.php
 
 ```php
 Broadcast::channel('messs', function ($user) {
     return (int) $user->id === (int) Auth::id();
 });
 ```
-5. routes/web.php
+6. routes/web.php
 
 ```php
 Route::get('/', 'MessageController@index');
@@ -419,7 +420,7 @@ Route::get('/', 'MessageController@index');
 Route::post('/message', 'MessageController@messageSent');
 ```
 
-6. не забудь php artisan make:auth
+7. не забудь php artisan make:auth
 
 ##Ну, думаю, все.
 Если ничего не забыл
