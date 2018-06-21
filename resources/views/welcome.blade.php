@@ -123,7 +123,7 @@
             let user = {!! json_encode(Auth::user()); !!};
             let user_field = $('#user_field');
             
-            const channel = window.Echo.channel('mess'); // ну и сам канал в виде переменной
+            const channel = window.Echo.private('messs'); // ну и сам канал в виде переменной
 
             form.on('submit', function(e) {
 
@@ -157,8 +157,10 @@
             // });
             // 
             
+            // console.log("channel", channel);
+
             //слушаем канал и выводим не более 10 сообщений(это прописано в MessageController)
-            window.Echo.channel('mess')
+            channel
                 .listen('.message.sent', function(e) {
                     list.append('<li>' + (++max_message_id) + ' ' + e.chatMessage.content + '</li>'); //добавляем новое сообщение
                     sbm.removeAttr('disabled'); //"освобождаем" кнопку сабмита

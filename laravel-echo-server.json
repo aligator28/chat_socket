@@ -22,8 +22,8 @@
 	"port": "6001",
 	"protocol": "http",
 	"socketio": {},
-	"sslCertPath": "C:/OSPanel/userdata/config/cert_files/chat.crt",
-	"sslKeyPath": "C:/OSPanel/userdata/config/cert_files/chat.key",
+	"sslCertPath": "",
+	"sslKeyPath": "",
 	"sslCertChainPath": "",
 	"sslPassphrase": "",
 	"apiOriginAllow": {

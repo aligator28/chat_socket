@@ -26,10 +26,10 @@ class MessagePushed extends Event implements ShouldBroadcast
     public $chatMessage;
     public $user;
 
-    public function __construct(Message $chatMessage)//, User $user
+    public function __construct(Message $chatMessage, User $user)//, User $user
     {
         $this->chatMessage = $chatMessage;
-        // $this->user = $user;
+        $this->user = $user;
     }
 
     /**
@@ -39,7 +39,7 @@ class MessagePushed extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('mess');
+        return new PrivateChannel('messs');
     }
 
     public function broadcastAs() {

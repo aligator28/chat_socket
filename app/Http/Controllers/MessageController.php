@@ -11,7 +11,7 @@ use Auth;
 class MessageController extends Controller
 {
 	public function __construct() {
-		// $this->middleware('auth');
+		$this->middleware('auth');
 	}
 
 	public function index() {
@@ -31,7 +31,7 @@ class MessageController extends Controller
 	    $message->save();
 
 	    // broadcast(new MessagePushed($message))->toOthers();//, $user
-	    event( new MessagePushed( $message ) );//Auth::user()
+	    event( new MessagePushed( $message, Auth::user() ) );//Auth::user()
 	    return $message;
     }
 }
