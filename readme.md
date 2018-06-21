@@ -138,6 +138,11 @@ if (typeof io !== 'undefined') {
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .user {
+                height: 50px;
+                color: #B61B1B;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
@@ -194,10 +199,6 @@ if (typeof io !== 'undefined') {
             const txtfld = $('#message'); //текстовое поле для ввода сообщений 
             const sbm = $('#submit'); //кнопка
             
-            //это пока не нужно - это для приватного канала, но как заставить работать приват, я пока не знаю
-            let user = {!! json_encode(Auth::user()); !!};
-            let user_field = $('#user_field');
-            
             const channel = window.Echo.private('messs'); // ну и сам канал в виде переменной
 
             form.on('submit', function(e) {
@@ -227,12 +228,6 @@ if (typeof io !== 'undefined') {
                 return o.id;
             }));
 
-            // $.each(laravel_messages, function(index, el) {
-            //     // console.log(el);                
-            // });
-            // 
-            
-            // console.log("channel", channel);
 
             //слушаем канал и выводим не более 10 сообщений(это прописано в MessageController)
             channel
@@ -243,28 +238,33 @@ if (typeof io !== 'undefined') {
                     list.find('li').first().remove(); //из списка убираем сообщение, которое стоит в самом верху
             });
 
+            // пользовательские события (показываем, что оппонент печатает)
+            let user = {!! json_encode(Auth::user()); !!}; //считываем из бекенда имя залогиненого пользователя
+            let user_field = $('#user_field'); //просто поле (div) куда будем писать сообщение
             
+            // делаем как-бы оповещение (шепот - whisper)
+            txtfld.on('keydown', function(e) {
+                channel.whisper('typ', {
+                    //do whatever
+                    // тут пока ничего не делаем, просто не нужно
+                });
+            });
 
-            // txtfld.on('keydown', function(e) {
-            //     channel.whisper('typ', {
-            //         //do whatever
-            //     });
-            // });
-
-
-            // channel.listenForWhisper('typ', (e) => {
-            //     user_field.text(user.name + ' is typing...');
+            // а тут слушаем оповещение о пользовательском событии (печатает гад!)
+            channel.listenForWhisper('typ', (e) => {
+                user_field.text(user.name + ' is typing...'); //вписываю внутрь дива имя печатающего и текст
                 
-            //     setTimeout(function() {
-            //       user_field.text('');
-            //     }, 1500);
-            // });
+                setTimeout(function() {
+                  user_field.text(''); // чтобы вечно эта надпись не висела, через 1,5 сек. очищаю надпись ... is typing...
+                }, 1500);
+            });
         });
 
         </script>
 
     </body>
 </html>
+
 
 ```
 11. Смотри laravel-echo-server.json (в корне проекта) - примерное правильное содержание настроек - там разве что можно прописать только authHost, если не прописан
