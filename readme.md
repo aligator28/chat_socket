@@ -35,6 +35,21 @@ Server ready!
 
 И пускай висит
 
+При загрузке страницы консоль Echo выдаст такое:
+
+```javascript
+[20:39:39] - OD-_Bvqa_ozj2mynAAAA authenticated for: private-messs
+[20:39:39] - OD-_Bvqa_ozj2mynAAAA joined channel: private-messs
+```
+При успешной отправке сообщения добавиться такое:
+
+```javascript
+Channel: private-messs
+Event: message.sent
+CHANNEL private-messs
+```
+
+
 6. npm install --save laravel-echo
 7. npm install --save socket.io-client
 
