@@ -90,7 +90,8 @@
                 <div class="chat">
                     <ul id="chat_list" style="text-align: left">
                         @foreach($messages as $message)
-                        <li>{{ $message->id }} {{ $message->content }}</li>
+                        <li>{{ $message->id }} {{ $message->content }}
+                        <p class="author">{{ $message->user->name }}</p></li>
                         @endforeach
                     </ul>
                     <div class="user" id="user_field"></div>
@@ -123,6 +124,7 @@
             const list = $('#chat_list'); //список для вывода сообщений чата
             const txtfld = $('#message'); //текстовое поле для ввода сообщений 
             const sbm = $('#submit'); //кнопка
+            let laravel_user = {!! json_encode(Auth::user()); !!};
             
             const channel = window.Echo.private('messs'); // ну и сам канал в виде переменной
 
@@ -157,7 +159,7 @@
             //слушаем канал и выводим не более 10 сообщений(это прописано в MessageController)
             channel
                 .listen('.message.sent', function(e) {
-                    list.append('<li>' + (++max_message_id) + ' ' + e.chatMessage.content + '</li>'); //добавляем новое сообщение
+                    list.append('<li>' + (++max_message_id) + ' ' + e.chatMessage.content + '<p class="author">' + e.user.name + '</p></li>'); //добавляем новое сообщение
                     sbm.removeAttr('disabled'); //"освобождаем" кнопку сабмита
                     txtfld.val(''); //в текстовом поле чистота:)
                     list.find('li').first().remove(); //из списка убираем сообщение, которое стоит в самом верху
@@ -169,7 +171,7 @@
             // делаем как-бы оповещение (шепот - whisper)
             txtfld.on('keydown', function(e) {
                 channel.whisper('typ', {
-                    user: {!! json_encode(Auth::user()); !!} //берем из бекенда залогиненого пользователя, который печатает
+                    user: laravel_user //берем из бекенда залогиненого пользователя, который печатает
                 });
             });
 
