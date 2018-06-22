@@ -181,9 +181,11 @@
                 e.preventDefault(); //не даем сабмиттить форму по дефолту
                 
                 let mess = form.find("#message").val(); //записываем текст введенный в текстовое поле формы в переменную
+                mess = removeTags(mess);
+                console.log(mess);
+                
                 sbm.attr('disabled', 'true'); //"обезвреживаем" кнопку сабмита, шоб дурак не нажимал много раз
                 txtfld.val('Sending...'); //внутри текстового поля пишем Sending... шоб дурак видел, что что-то происходит
-                
                 //просто отправляем наше сообщение на сервер
                 axios.post('/message', {
                     message: mess
@@ -208,9 +210,7 @@
             channel
                 .listen('.message.sent', function(e) {
                     let classname = 'other_message';
-                        console.log("e.user.name", e.user.name );
 
-                        console.log("laravel_user", laravel_user);
                     if (e.user.name == laravel_user.name) {
                         classname = 'author_message';
                     }
@@ -240,6 +240,20 @@
                 }, 1500);
             });
         });
+
+
+
+        function removeTags(string, array) {
+          return array ? string.split("<").filter(function(val){ return f(array, val); }).map(function(val){ return f(array, val); }).join("") : string.split("<").map(function(d){ return d.split(">").pop(); }).join("");
+          function f(array, value){
+            return array.map(function(d){ return value.includes(d + ">"); }).indexOf(true) != -1 ? "<" + value : value.split(">")[1];
+          }
+        }
+        // КАК ПОЛЬЗОВАТЬСЯ removeTags()
+        // var x = "<span><i>Hello</i> <b>world</b>!</span>";
+        // console.log(removeTags(x)); // Hello world!
+        // console.log(removeTags(x, ["span", "i"])); // <span><i>Hello</i> world!</span>
+        
 
         </script>
 
