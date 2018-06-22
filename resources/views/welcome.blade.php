@@ -63,10 +63,40 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .chat_list {
+                border: 2px dashed black;
+                border-radius: 10px;
+                list-style: none;
+                text-align: left;
+                padding: 20px;
+                position: relative;
+            }
             .user {
                 height: 50px;
                 color: #B61B1B;
                 font-weight: bold;
+            }
+            .author {
+                position: relative;
+                display: inline-block;
+                margin-left: 5%;
+                vertical-align: sub;
+                background-color: #F9F8BB;
+                padding: 2px 5px;
+                border-radius: 2px;
+                font-size: 0.8em;
+            }
+            .author_message {
+                background-color: #D2FAFF;
+            }
+            .other_message {
+                background-color: #BEFEB7;
+                text-align: right;
+            }
+            .author_message, .other_message {
+                padding: 5px;
+                border-radius: 10px;
+                margin: 2% 0;
             }
         </style>
     </head>
@@ -88,10 +118,15 @@
                     Laravel
                 </div>
                 <div class="chat">
-                    <ul id="chat_list" style="text-align: left">
+                    <ul id="chat_list" class="chat_list">
                         @foreach($messages as $message)
-                        <li>{{ $message->id }} {{ $message->content }}
-                        <p class="author">{{ $message->user->name }}</p></li>
+                            @if ($message->user->name === Auth::user()->name)
+                            <?php $classname = 'author_message' ?>
+                            @else
+                            <?php $classname = 'other_message' ?>
+                            @endif
+                        <li class="{{$classname}}">{{ $message->id }} {{ $message->content }}
+                        <span class="author">{{ $message->user->name }}</span></li>
                         @endforeach
                     </ul>
                     <div class="user" id="user_field"></div>
@@ -159,7 +194,11 @@
             //слушаем канал и выводим не более 10 сообщений(это прописано в MessageController)
             channel
                 .listen('.message.sent', function(e) {
-                    list.append('<li>' + (++max_message_id) + ' ' + e.chatMessage.content + '<p class="author">' + e.user.name + '</p></li>'); //добавляем новое сообщение
+                    if (e.user.name == laravel_user) {
+                        classname = 'author_messsage';
+                    }
+
+                    list.append('<li class="' + classname + '">' + (++max_message_id) + ' ' + e.chatMessage.content + '<span class="author">' + e.user.name + '</span></li>'); //добавляем новое сообщение
                     sbm.removeAttr('disabled'); //"освобождаем" кнопку сабмита
                     txtfld.val(''); //в текстовом поле чистота:)
                     list.find('li').first().remove(); //из списка убираем сообщение, которое стоит в самом верху
