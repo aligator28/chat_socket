@@ -63,6 +63,13 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .chat {
+                width: 80%;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-bottom: 200px;
+            }
             .chat_list {
                 border: 2px dashed black;
                 border-radius: 10px;
@@ -70,6 +77,20 @@
                 text-align: left;
                 padding: 20px;
                 position: relative;
+            }
+            .submit {
+                display: block;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 25%;
+                height: 50px;
+                background-color: yellowgreen;
+                border: 0;
+                border-radius: 10px;
+                color: white;
+                font-size: 1.5em;
+                cursor: pointer;
             }
             .user {
                 height: 50px;
@@ -101,7 +122,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div>
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -125,26 +146,18 @@
                             @else
                             <?php $classname = 'other_message' ?>
                             @endif
-                        <li class="{{$classname}}">{{ $message->id }} {{ $message->content }}
+                        <li class="{{$classname}}">{{ $message->content }}
                         <span class="author">{{ $message->user->name }}</span></li>
                         @endforeach
                     </ul>
                     <div class="user" id="user_field"></div>
-                </div>
-                <div class="form">
-                    <form id="fff" method="post">
-                        @csrf
-                        <input type="text" name="message" id="message">
-                        <input id="submit" type="submit" name="submit" value="Send">
-                    </form>
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <div class="form">
+                        <form id="fff" method="post">
+                            @csrf
+                            <textarea cols="50" rows="6" name="message" id="message"></textarea>
+                            <input class="submit" id="submit" type="submit" name="submit" value="Send">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,21 +197,25 @@
             });
 
             //этот блок считывает номер сообщения из присланного массива со стороны сервера и записывем в переменную самый последний номер (можно этого не делать)
-            let laravel_messages = {!! json_encode($messages) !!};
-            let max_message_id = Math.max.apply(
-                Math, $.map(laravel_messages, function(o) {
-                return o.id;
-            }));
+            // let laravel_messages = {!! json_encode($messages) !!};
+            // let max_message_id = Math.max.apply(
+            //     Math, $.map(laravel_messages, function(o) {
+            //     return o.id;
+            // }));
 
 
             //слушаем канал и выводим не более 10 сообщений(это прописано в MessageController)
             channel
                 .listen('.message.sent', function(e) {
-                    if (e.user.name == laravel_user) {
-                        classname = 'author_messsage';
+                    let classname = 'other_message';
+                        console.log("e.user.name", e.user.name );
+
+                        console.log("laravel_user", laravel_user);
+                    if (e.user.name == laravel_user.name) {
+                        classname = 'author_message';
                     }
 
-                    list.append('<li class="' + classname + '">' + (++max_message_id) + ' ' + e.chatMessage.content + '<span class="author">' + e.user.name + '</span></li>'); //добавляем новое сообщение
+                    list.append('<li class="' + classname + '">' + e.chatMessage.content + '<span class="author">' + e.user.name + '</span></li>'); //добавляем новое сообщение
                     sbm.removeAttr('disabled'); //"освобождаем" кнопку сабмита
                     txtfld.val(''); //в текстовом поле чистота:)
                     list.find('li').first().remove(); //из списка убираем сообщение, которое стоит в самом верху
