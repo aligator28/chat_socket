@@ -17256,7 +17256,7 @@ var app = new Vue({
   el: '#app'
 });
 
-//7th brach
+//7th
 
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
