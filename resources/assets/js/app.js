@@ -40,10 +40,8 @@ Vue.component('sent-message', require('./components/Sent.vue'));
 const app = new Vue({
     el: '#app'
 });
+// меняю в 6-й
 
-//6th
-//
-//
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
 
