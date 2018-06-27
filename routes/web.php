@@ -18,8 +18,13 @@
 // });
 
 Route::get('/', 'MessageController@index');
-
 Route::post('/message', 'MessageController@messageSent');
+
+
+Route::get('chat', 'MessageController@chat');
+Route::get('messages', 'MessageController@fetch');
+Route::post('messages', 'MessageController@sentMessage');
+
 
 Auth::routes();
 

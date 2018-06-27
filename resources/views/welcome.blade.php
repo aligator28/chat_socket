@@ -98,11 +98,17 @@
                 font-weight: bold;
             }
             .author {
+                background-color: #F9F8BB;
+                margin-left: 5%;
+            }
+            .time {
+                margin-left: 2px;
+                background-color: #F6F0F0;
+            }
+            .author, .time {
                 position: relative;
                 display: inline-block;
-                margin-left: 5%;
                 vertical-align: sub;
-                background-color: #F9F8BB;
                 padding: 2px 5px;
                 border-radius: 2px;
                 font-size: 0.8em;
@@ -147,7 +153,7 @@
                             <?php $classname = 'other_message' ?>
                             @endif
                         <li class="{{$classname}}">{{ $message->content }}
-                        <span class="author">{{ $message->user->name }}</span></li>
+                        <span class="author">{{ $message->user->name }} </span><span class="time">{{ $message->created_at->format('H:i:s') }}</span></li>
                         @endforeach
                     </ul>
                     <div class="user" id="user_field"></div>
@@ -182,7 +188,6 @@
                 
                 let mess = form.find("#message").val(); //записываем текст введенный в текстовое поле формы в переменную
                 mess = removeTags(mess);
-                console.log(mess);
                 
                 sbm.attr('disabled', 'true'); //"обезвреживаем" кнопку сабмита, шоб дурак не нажимал много раз
                 txtfld.val('Sending...'); //внутри текстового поля пишем Sending... шоб дурак видел, что что-то происходит
@@ -244,7 +249,9 @@
 
 
         function removeTags(string, array) {
-          return array ? string.split("<").filter(function(val){ return f(array, val); }).map(function(val){ return f(array, val); }).join("") : string.split("<").map(function(d){ return d.split(">").pop(); }).join("");
+          return array ? string.split("<").filter(function(val) { 
+            return f(array, val); }).map(function(val){ 
+                return f(array, val); }).join("") : string.split("<").map(function(d) { return d.split(">").pop(); }).join("");
           function f(array, value){
             return array.map(function(d){ return value.includes(d + ">"); }).indexOf(true) != -1 ? "<" + value : value.split(">")[1];
           }
