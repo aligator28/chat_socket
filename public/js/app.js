@@ -17255,7 +17255,7 @@ Vue.component('sent-message', __webpack_require__(88));
 var app = new Vue({
   el: '#app'
 });
-// 666
+// 6666666666666666
 
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
