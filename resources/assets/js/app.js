@@ -40,7 +40,7 @@ Vue.component('sent-message', require('./components/Sent.vue'));
 const app = new Vue({
     el: '#app'
 });
-// 66
+// 6999
 
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
