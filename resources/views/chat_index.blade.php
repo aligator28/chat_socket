@@ -9,8 +9,8 @@
 
                 <div class="card-body">
                     {{-- <message :messages="messagesss"></message> --}}
-                    <message></message>
                     {{-- <sent-message v-on:messagesent="addMessage" :user="{{ Auth::user() }}"></sent-message> --}}
+                    <message></message>
                     <sent-message :user="{{ Auth::user() }}"></sent-message>
                 </div>
             </div>
