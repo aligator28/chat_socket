@@ -41,7 +41,9 @@ const app = new Vue({
     el: '#app'
 });
 
-
+//6th
+//
+//
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
 
