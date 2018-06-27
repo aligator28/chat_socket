@@ -42,11 +42,15 @@ const app = new Vue({
 });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // 6666666666666666
 >>>>>>> branch_6
 =======
 // 66
+>>>>>>> branch_6
+=======
+// 6999
 >>>>>>> branch_6
 
 // import Pusher from "pusher-js"
