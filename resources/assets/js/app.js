@@ -41,14 +41,7 @@ const app = new Vue({
     el: '#app'
 });
 
-<<<<<<< HEAD
-//7th
 
-=======
-//6th
-//
-//
->>>>>>> branch_6
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
 
