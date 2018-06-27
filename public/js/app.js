@@ -45853,7 +45853,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		// а тут слушаем оповещение о пользовательском событии (печатает гад!)
 		this.channel.listenForWhisper('typ', function (e) {
-			console.log('typing...', e.user);
+			console.log('typing...', e.user.name);
 
 			// setTimeout(function() {
 			//   user_field.text(''); // чтобы вечно эта надпись не висела, через 1,5 сек. очищаю надпись ... is typing...
