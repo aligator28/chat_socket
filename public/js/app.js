@@ -17255,6 +17255,10 @@ Vue.component('sent-message', __webpack_require__(88));
 var app = new Vue({
   el: '#app'
 });
+<<<<<<< HEAD
+=======
+// 6666666666666666
+>>>>>>> branch_6
 
 // import Pusher from "pusher-js"
 // import Echo from "laravel-echo"
